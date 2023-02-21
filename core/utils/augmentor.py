@@ -210,12 +210,11 @@ class SparseFlowAugmentor:
             img2 = cv2.resize(img2, None, fx=scale_x, fy=scale_y, interpolation=cv2.INTER_LINEAR)
             flow, valid = self.resize_sparse_flow_map(flow, valid, fx=scale_x, fy=scale_y)
 
-        if self.do_flip:
-            if np.random.rand() < 0.5: # h-flip
-                img1 = img1[:, ::-1]
-                img2 = img2[:, ::-1]
-                flow = flow[:, ::-1] * [-1.0, 1.0]
-                valid = valid[:, ::-1]
+        if self.do_flip and np.random.rand() < 0.5:
+            img1 = img1[:, ::-1]
+            img2 = img2[:, ::-1]
+            flow = flow[:, ::-1] * [-1.0, 1.0]
+            valid = valid[:, ::-1]
 
         margin_y = 20
         margin_x = 50
